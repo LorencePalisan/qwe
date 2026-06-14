@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-sidebar: var(--sidebar);
+  --color-primary: var(--primary);
+}
+
+:root {
+  --background: #FAF7FB;
+  --foreground: #1A001D;
+  --card: #FFFFFF;
+  --muted: #FAF7FB;
+  --muted-foreground: #999999;
+  --border: rgba(26, 0, 29, 0.06);
+  --sidebar: #FFFFFF;
+  --primary: #F62C7D;
+}
+
+.dark {
+  --background: #1A001D;
+  --foreground: #FFFFFF;
+  --card: rgba(255, 255, 255, 0.1);
+  --muted: #3D1A42;
+  --muted-foreground: #999999;
+  --border: rgba(255, 255, 255, 0.12);
+  --sidebar: #3D1A42;
+  --primary: #F62C7D;
+}
