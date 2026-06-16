@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { User, Briefcase, Building2, Users, Eye, EyeOff, Lock, Check, Upload } from "@/icons";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/context/ThemeContext";
 import NdaModal from "@/components/auth/NdaModal";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -32,9 +33,9 @@ const DOCUMENT_REQUIREMENTS: Record<string, { key: string; label: string; hint: 
 
 // ── Shared styles ─────────────────────────────────────────────────────────────
 
-const LABEL = "text-[13.6px] font-medium text-white/80";
+const LABEL = "text-[13.6px] font-medium text-foreground/80";
 const INPUT =
-  "h-[53px] w-full rounded-[10px] border border-white/12 bg-white/6 px-[18px] text-[15.2px] text-white placeholder:text-white/50 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
+  "h-[53px] w-full rounded-[10px] border border-border bg-foreground/6 px-[18px] text-[15.2px] text-foreground placeholder:text-foreground/55 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
@@ -44,7 +45,7 @@ function SectionTitle({ step, title }: { step: number; title: string }) {
       <div className="flex size-6 items-center justify-center rounded-full bg-[#F62C7D]/20 text-[11px] font-bold text-[#F62C7D]">
         {step}
       </div>
-      <h2 className="text-[17.6px] font-bold text-white">{title}</h2>
+      <h2 className="text-[17.6px] font-bold text-foreground">{title}</h2>
     </div>
   );
 }
@@ -64,11 +65,11 @@ function DocFileInput({
   return (
     <div className="flex flex-col gap-1.5">
       <p className={LABEL}>{label}</p>
-      <p className="text-[12px] text-[#999]">{hint}</p>
+      <p className="text-[12px] text-foreground/60">{hint}</p>
       <button
         type="button"
         onClick={() => ref.current?.click()}
-        className="flex h-[48px] items-center gap-2 rounded-[10px] border border-dashed border-white/20 bg-white/6 px-4 text-[13.6px] text-white/60 transition-all hover:border-[#F62C7D]/50 hover:text-white/80"
+        className="flex h-[48px] items-center gap-2 rounded-[10px] border border-dashed border-border bg-foreground/6 px-4 text-[13.6px] text-foreground/60 transition-all hover:border-[#F62C7D]/50 hover:text-foreground/80"
       >
         <Upload className="size-4 shrink-0 text-[#F62C7D]" />
         <span className="truncate">{fileName ?? "Choose file"}</span>
@@ -91,6 +92,8 @@ function DocFileInput({
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function Register() {
+  const { theme } = useTheme();
+
   // NDA
   const [ndaAccepted, setNdaAccepted]   = useState(false);
   const [ndaModalOpen, setNdaModalOpen] = useState(true); // auto-open on mount
@@ -169,7 +172,11 @@ export default function Register() {
 
       {/* Logo */}
       <div className="mb-10 flex justify-center">
-        <img src="/whodini.webp" alt="Whodini" className="h-14 w-auto" />
+        <img
+          src={theme === "dark" ? "/whodini-dark.webp" : "/whodini-light.webp"}
+          alt="Whodini"
+          className="h-14 w-auto"
+        />
       </div>
 
       {/* Outer max-width container */}
@@ -184,9 +191,9 @@ export default function Register() {
         >
 
           {/* ── Main form ────────────────────────────────────────────── */}
-          <div className="min-w-0 flex-1 rounded-[16px] border border-white/12 bg-white/10 p-6 sm:p-8 lg:p-10 backdrop-blur-sm">
-            <h1 className="mb-1.5 text-[28px] font-bold text-white">Create your account</h1>
-            <p className="mb-8 text-[14px] text-[#999]">Fill in your details to get started</p>
+          <div className="min-w-0 flex-1 rounded-[16px] border border-border bg-card p-6 sm:p-8 lg:p-10 backdrop-blur-sm">
+            <h1 className="mb-1.5 text-[28px] font-bold text-foreground">Create your account</h1>
+            <p className="mb-8 text-[14px] text-foreground/60">Fill in your details to get started</p>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
@@ -232,7 +239,7 @@ export default function Register() {
                         <button
                           type="button"
                           onClick={() => setShowPassword((v) => !v)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground"
                         >
                           {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                         </button>
@@ -252,7 +259,7 @@ export default function Register() {
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword((v) => !v)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground"
                         >
                           {showConfirmPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                         </button>
@@ -278,7 +285,7 @@ export default function Register() {
                           "flex flex-col gap-3 rounded-[12px] border p-4 text-left transition-all",
                           selected
                             ? "border-[#F62C7D]/50 bg-[#F62C7D]/10"
-                            : "border-white/12 bg-white/6 hover:border-white/20 hover:bg-white/10",
+                            : "border-border bg-foreground/6 hover:border-foreground/20 hover:bg-foreground/8",
                           locked && "cursor-default",
                         )}
                       >
@@ -286,20 +293,20 @@ export default function Register() {
                           <div
                             className={cn(
                               "flex size-9 items-center justify-center rounded-lg",
-                              selected ? "bg-[#F62C7D]/20" : "bg-white/10",
+                              selected ? "bg-[#F62C7D]/20" : "bg-foreground/10",
                             )}
                           >
                             <Icon
                               className={cn(
                                 "size-4",
-                                selected ? "text-[#F62C7D]" : "text-white/60",
+                                selected ? "text-[#F62C7D]" : "text-foreground/60",
                               )}
                             />
                           </div>
                           <div
                             className={cn(
                               "flex size-5 items-center justify-center rounded-full border",
-                              selected ? "border-[#F62C7D] bg-[#F62C7D]" : "border-white/20",
+                              selected ? "border-[#F62C7D] bg-[#F62C7D]" : "border-border",
                             )}
                           >
                             {selected && locked  && <Lock  className="size-2.5 text-white" />}
@@ -307,10 +314,10 @@ export default function Register() {
                           </div>
                         </div>
                         <div>
-                          <p className={cn("text-[14px] font-semibold", selected ? "text-white" : "text-white/70")}>
+                          <p className={cn("text-[14px] font-semibold", selected ? "text-foreground" : "text-foreground/70")}>
                             {label}
                           </p>
-                          <p className="mt-0.5 text-[12px] text-[#999]">{description}</p>
+                          <p className="mt-0.5 text-[12px] text-foreground/60">{description}</p>
                         </div>
                       </button>
                     );
@@ -329,7 +336,7 @@ export default function Register() {
               <div className="flex flex-col gap-3">
                 {!ndaAccepted && (
                   <div className="flex items-center justify-between rounded-[10px] border border-[#F62C7D]/20 bg-[#F62C7D]/10 px-4 py-3">
-                    <p className="text-[13.6px] text-white/70">
+                    <p className="text-[13.6px] text-foreground/70">
                       You must accept the NDA before submitting.
                     </p>
                     <button
@@ -350,9 +357,9 @@ export default function Register() {
                   {isSaving ? "Creating account…" : "Create Account"}
                 </button>
 
-                <p className="text-center text-[13.6px] text-[#999]">
+                <p className="text-center text-[13.6px] text-foreground/60">
                   Already have an account?{" "}
-                  <Link to="/" className="font-medium text-white hover:text-[#F62C7D]">
+                  <Link to="/" className="font-medium text-foreground hover:text-[#F62C7D]">
                     Sign in
                   </Link>
                 </p>
@@ -363,9 +370,9 @@ export default function Register() {
 
           {/* ── Document upload panel (conditional) ──────────────────── */}
           {hasNonPersonal && (
-            <div className="w-full rounded-[16px] border border-white/12 bg-white/10 p-6 sm:p-8 backdrop-blur-sm xl:w-[460px] xl:shrink-0">
-              <h2 className="mb-1.5 text-[17.6px] font-bold text-white">Required Documents</h2>
-              <p className="mb-6 text-[13.6px] text-[#999]">
+            <div className="w-full rounded-[16px] border border-border bg-card p-6 sm:p-8 backdrop-blur-sm xl:w-[460px] xl:shrink-0">
+              <h2 className="mb-1.5 text-[17.6px] font-bold text-foreground">Required Documents</h2>
+              <p className="mb-6 text-[13.6px] text-foreground/60">
                 Upload the required files for each selected account type.
               </p>
 
@@ -376,14 +383,14 @@ export default function Register() {
                   const Icon = type.icon;
 
                   return (
-                    <div key={typeId} className="rounded-[12px] border border-white/12 bg-white/6">
+                    <div key={typeId} className="rounded-[12px] border border-border bg-foreground/6">
                       <div className="flex items-center gap-3 p-4">
                         <div className="flex size-8 items-center justify-center rounded-lg bg-[#F62C7D]/20">
                           <Icon className="size-4 text-[#F62C7D]" />
                         </div>
-                        <p className="text-[14px] font-semibold text-white">{type.label}</p>
+                        <p className="text-[14px] font-semibold text-foreground">{type.label}</p>
                       </div>
-                      <div className="flex flex-col gap-5 border-t border-white/10 p-4">
+                      <div className="flex flex-col gap-5 border-t border-border p-4">
                         {DOCUMENT_REQUIREMENTS[typeId].map(({ key, label, hint }) => (
                           <DocFileInput
                             key={key}

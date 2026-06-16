@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "@/icons";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/context/ThemeContext";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -19,16 +20,17 @@ const ROUTE_STUBS = [
 
 // ── Shared styles ─────────────────────────────────────────────────────────────
 
-const LABEL = "text-[13.6px] font-medium text-white/80";
+const LABEL = "text-[13.6px] font-medium text-foreground/80";
 const INPUT =
-  "h-[53px] w-full rounded-[10px] border border-white/12 bg-white/6 px-[18px] text-[15.2px] text-white placeholder:text-white/50 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
+  "h-[53px] w-full rounded-[10px] border border-border bg-foreground/6 px-[18px] text-[15.2px] text-foreground placeholder:text-foreground/55 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
 const BTN_PRIMARY =
   "h-[48px] w-full rounded-full bg-[#F62C7D] text-[14.4px] font-semibold text-white shadow-[rgba(246,44,125,0.35)_0px_4px_20px_0px] transition-opacity hover:opacity-90 active:opacity-80 disabled:cursor-not-allowed disabled:opacity-50";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Login() {
-  const navigate = useNavigate();
+  const navigate    = useNavigate();
+  const { theme }   = useTheme();
 
   // ── On mount: SPA fallback ───────────────────────────────────────────────
   useEffect(() => {
@@ -214,21 +216,25 @@ export default function Login() {
   // ── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
-      <img src="/whodini.webp" alt="Whodini" className="mb-10 h-14 w-auto" />
+      <img
+        src={theme === "dark" ? "/whodini-dark.webp" : "/whodini-light.webp"}
+        alt="Whodini"
+        className="mb-10 h-14 w-auto"
+      />
 
-      <div className="w-full max-w-[440px] rounded-[16px] border border-white/12 bg-white/10 p-8 backdrop-blur-sm">
-        <h1 className="mb-2 text-[28px] font-bold text-white">Welcome back</h1>
-        <p className="mb-8 text-[14px] text-[#999]">Sign in to your Whodini account</p>
+      <div className="w-full max-w-[440px] rounded-[16px] border border-border bg-card p-8 backdrop-blur-sm">
+        <h1 className="mb-2 text-[28px] font-bold text-foreground">Welcome back</h1>
+        <p className="mb-8 text-[14px] text-foreground/60">Sign in to your Whodini account</p>
 
         {/* Tab switcher */}
-        <div className="mb-8 flex rounded-[10px] border border-white/12 bg-white/6 p-1">
+        <div className="mb-8 flex rounded-[10px] border border-border bg-foreground/6 p-1">
           {(["password", "otp"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={cn(
                 "flex-1 rounded-[8px] py-2 text-[13.6px] font-semibold transition-all",
-                activeTab === tab ? "bg-[#F62C7D] text-white" : "text-white/60 hover:text-white",
+                activeTab === tab ? "bg-[#F62C7D] text-white" : "text-foreground/60 hover:text-foreground",
               )}
             >
               {tab === "password" ? "Password" : "OTP via Phone"}
@@ -268,7 +274,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPw((v) => !v)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground"
                 >
                   {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
@@ -304,7 +310,7 @@ export default function Login() {
                     onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
                     className={INPUT}
                   />
-                  <p className="text-[12px] text-[#999]">Include your country code (e.g. +1 for US)</p>
+                  <p className="text-[12px] text-foreground/60">Include your country code (e.g. +1 for US)</p>
                 </div>
 
                 {otpError && (
@@ -327,8 +333,8 @@ export default function Login() {
             {otpStep === "enter_code" && (
               <>
                 {/* Phone row with Change button */}
-                <div className="flex items-center justify-between rounded-[10px] border border-white/12 bg-white/6 px-4 py-3">
-                  <span className="text-[14px] text-white/80">{phone}</span>
+                <div className="flex items-center justify-between rounded-[10px] border border-border bg-foreground/6 px-4 py-3">
+                  <span className="text-[14px] text-foreground/80">{phone}</span>
                   <button
                     onClick={() => {
                       setOtpStep("enter_phone");
@@ -341,7 +347,7 @@ export default function Login() {
                   </button>
                 </div>
 
-                <p className="text-[13.6px] text-[#999]">
+                <p className="text-[13.6px] text-foreground/60">
                   Enter the 6-digit code sent to your phone.
                 </p>
 
@@ -358,7 +364,7 @@ export default function Login() {
                       onChange={(e) => handleDigitChange(i, e.target.value)}
                       onKeyDown={(e) => handleDigitKeyDown(i, e)}
                       onPaste={i === 0 ? handlePaste : undefined}
-                      className="h-[56px] w-full rounded-[10px] border border-white/12 bg-white/6 text-center text-[22px] font-bold text-white caret-[#F62C7D] transition-all focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15"
+                      className="h-[56px] w-full rounded-[10px] border border-border bg-foreground/6 text-center text-[22px] font-bold text-foreground caret-[#F62C7D] transition-all focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15"
                     />
                   ))}
                 </div>
@@ -380,7 +386,7 @@ export default function Login() {
                 <button
                   onClick={handleResendOtp}
                   disabled={resendCooldown > 0}
-                  className="text-center text-[13.6px] font-medium text-white/60 transition-colors hover:text-white disabled:cursor-not-allowed disabled:text-white/30"
+                  className="text-center text-[13.6px] font-medium text-foreground/60 transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:text-foreground/30"
                 >
                   {resendCooldown > 0 ? `Resend OTP in ${resendCooldown}s` : "Resend OTP"}
                 </button>
@@ -391,9 +397,9 @@ export default function Login() {
         )}
 
         {/* Footer */}
-        <p className="mt-8 text-center text-[13.6px] text-[#999]">
+        <p className="mt-8 text-center text-[13.6px] text-foreground/60">
           New to Whodini?{" "}
-          <Link to="/register" className="font-medium text-white hover:text-[#F62C7D]">
+          <Link to="/register" className="font-medium text-foreground hover:text-[#F62C7D]">
             Create an account
           </Link>
         </p>

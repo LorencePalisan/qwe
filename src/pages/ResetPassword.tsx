@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Eye, EyeOff, CheckCircle2, ArrowLeft } from "@/icons";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/context/ThemeContext";
 
 const LABEL =
-  "text-[13.6px] font-medium text-white/80";
+  "text-[13.6px] font-medium text-foreground/80";
 const INPUT =
-  "h-[53px] w-full rounded-[10px] border border-white/12 bg-white/6 px-[18px] text-[15.2px] text-white placeholder:text-white/50 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
+  "h-[53px] w-full rounded-[10px] border border-border bg-foreground/6 px-[18px] text-[15.2px] text-foreground placeholder:text-foreground/55 focus:border-[#F62C7D]/80 focus:outline-none focus:ring-[3px] focus:ring-[#F62C7D]/15 transition-all";
 const BTN_PRIMARY =
   "h-[48px] w-full rounded-full bg-[#F62C7D] text-[14.4px] font-semibold text-white shadow-[rgba(246,44,125,0.35)_0px_4px_20px_0px] transition-opacity hover:opacity-90 active:opacity-80 disabled:cursor-not-allowed disabled:opacity-50";
 
 export default function ResetPassword() {
   const navigate       = useNavigate();
   const [searchParams] = useSearchParams();
+  const { theme }      = useTheme();
 
   const token = searchParams.get("token") ?? "";
   const email = searchParams.get("email") ?? "";
@@ -63,23 +65,27 @@ export default function ResetPassword() {
   if (!hasValidParams) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-[14px] text-white/50">Verifying link…</p>
+        <p className="text-[14px] text-foreground/55">Verifying link…</p>
       </div>
     );
   }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
-      <img src="/whodini.webp" alt="Whodini" className="mb-10 h-14 w-auto" />
+      <img
+        src={theme === "dark" ? "/whodini-dark.webp" : "/whodini-light.webp"}
+        alt="Whodini"
+        className="mb-10 h-14 w-auto"
+      />
 
-      <div className="w-full max-w-[440px] rounded-[16px] border border-white/12 bg-white/10 p-8 backdrop-blur-sm">
+      <div className="w-full max-w-[440px] rounded-[16px] border border-border bg-card p-8 backdrop-blur-sm">
 
         {!done ? (
           <>
-            <h1 className="mb-2 text-[28px] font-bold text-white">Set new password</h1>
-            <p className="mb-8 text-[14px] text-[#999]">
+            <h1 className="mb-2 text-[28px] font-bold text-foreground">Set new password</h1>
+            <p className="mb-8 text-[14px] text-foreground/60">
               Resetting password for{" "}
-              <span className="font-medium text-white">{email}</span>.
+              <span className="font-medium text-foreground">{email}</span>.
             </p>
 
             <div className="flex flex-col gap-4">
@@ -98,7 +104,7 @@ export default function ResetPassword() {
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground"
                   >
                     {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
@@ -120,7 +126,7 @@ export default function ResetPassword() {
                   <button
                     type="button"
                     onClick={() => setShowConfirmation((v) => !v)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/55 hover:text-foreground"
                   >
                     {showConfirmation ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
@@ -150,8 +156,8 @@ export default function ResetPassword() {
             <div className="flex size-16 items-center justify-center rounded-full bg-emerald-500/15">
               <CheckCircle2 className="size-8 text-emerald-400" />
             </div>
-            <h1 className="text-[24px] font-bold text-white">Password reset!</h1>
-            <p className="text-[14px] text-[#999]">Redirecting to sign in…</p>
+            <h1 className="text-[24px] font-bold text-foreground">Password reset!</h1>
+            <p className="text-[14px] text-foreground/60">Redirecting to sign in…</p>
 
             <Link
               to="/"
@@ -166,7 +172,7 @@ export default function ResetPassword() {
       {/* Back button */}
       <button
         onClick={() => navigate(-1)}
-        className="mt-8 flex items-center gap-2 text-[13.6px] text-white/50 transition-colors hover:text-white"
+        className="mt-8 flex items-center gap-2 text-[13.6px] text-foreground/55 transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-4" />
         Back

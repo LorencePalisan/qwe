@@ -1,9 +1,12 @@
 import { Outlet } from "react-router-dom";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function AuthLayout() {
   return (
-    <div className="dark min-h-screen bg-[#1A001D] font-sans">
-      <Outlet />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-background font-sans">
+        <Outlet />
+      </div>
+    </ThemeProvider>
   );
 }
