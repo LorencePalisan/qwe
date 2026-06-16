@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Whodini</title>
+    <script>
+      // GitHub Pages SPA redirect — keeps clean URLs without hash routing.
+      // When GH Pages 404s on a client-side route like /qwe/personal, this
+      // script encodes the path into a query param and sends the browser to
+      // the root index.html, which then restores the original URL via
+      // history.replaceState so React Router sees the right path.
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 2).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
