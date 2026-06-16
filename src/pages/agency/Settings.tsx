@@ -11,7 +11,7 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: () =
     <label className="flex cursor-pointer items-center justify-between gap-4 py-2">
       <span className="text-[14px] text-foreground/80">{label}</span>
       <div onClick={onChange} className={cn("relative h-6 w-11 rounded-full transition-colors", checked ? "bg-[#F62C7D]" : "bg-foreground/20")}>
-        <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-transform", checked ? "left-[22px]" : "left-0.5")} />
+        <span className={cn("absolute top-0.5 left-0 size-5 rounded-full bg-white shadow transition-transform", checked ? "translate-x-[22px]" : "translate-x-0.5")} />
       </div>
     </label>
   );

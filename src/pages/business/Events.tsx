@@ -160,7 +160,7 @@ function EventSheet({
                 draft.isAdvertised ? "bg-[#F62C7D]" : "bg-foreground/20",
               )}
             >
-              <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-transform", draft.isAdvertised ? "translate-x-5" : "translate-x-0.5")} />
+              <span className={cn("absolute top-0.5 left-0 size-5 rounded-full bg-white shadow transition-transform", draft.isAdvertised ? "translate-x-[22px]" : "translate-x-0.5")} />
             </button>
           </div>
         </div>
@@ -240,7 +240,7 @@ function EventCard({
               ev.isAdvertised ? "bg-[#F62C7D]" : "bg-foreground/20",
             )}
           >
-            <span className={cn("absolute top-0.5 size-4 rounded-full bg-white shadow transition-transform", ev.isAdvertised ? "translate-x-4" : "translate-x-0.5")} />
+            <span className={cn("absolute top-0.5 left-0 size-4 rounded-full bg-white shadow transition-transform", ev.isAdvertised ? "translate-x-[18px]" : "translate-x-0.5")} />
           </button>
           <span className="text-[11px] text-foreground/60">Advertise</span>
         </div>

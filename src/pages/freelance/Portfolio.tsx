@@ -214,7 +214,7 @@ function ShowcaseSection() {
                   onClick={() => setDraft((p) => ({ ...p, anonymizeClient: !p.anonymizeClient }))}
                   className={cn("relative h-6 w-11 rounded-full transition-colors", draft.anonymizeClient ? "bg-[#F62C7D]" : "bg-foreground/20")}
                 >
-                  <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition-transform", draft.anonymizeClient ? "translate-x-5" : "translate-x-0.5")} />
+                  <span className={cn("absolute top-0.5 left-0 size-5 rounded-full bg-white shadow transition-transform", draft.anonymizeClient ? "translate-x-[22px]" : "translate-x-0.5")} />
                 </button>
               </div>
             </div>

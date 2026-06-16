@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Plus, X, Kanban, Users, Ticket, ArrowLeft, MoreHorizontal,
   MessageSquare, FileText, Calendar, Upload, Send, Paperclip, Tag,
@@ -730,11 +731,14 @@ function WorkspaceCard({ ws, onOpen }: { ws: Workspace; onOpen: () => void }) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function BusinessWorkspace() {
-  const [workspaces] = useState<Workspace[]>(WORKSPACES);
-  const [activeWs, setActiveWs] = useState<Workspace | null>(null);
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+  const navigate        = useNavigate();
+  const [workspaces]    = useState<Workspace[]>(WORKSPACES);
+
+  const activeWs = workspaceId ? (workspaces.find((w) => w.id === workspaceId) ?? null) : null;
 
   if (activeWs) {
-    return <KanbanBoard workspace={activeWs} onBack={() => setActiveWs(null)} />;
+    return <KanbanBoard workspace={activeWs} onBack={() => navigate("/business/workspace")} />;
   }
 
   return (
@@ -775,7 +779,7 @@ export default function BusinessWorkspace() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {workspaces.map((ws) => (
-              <WorkspaceCard key={ws.id} ws={ws} onOpen={() => setActiveWs(ws)} />
+              <WorkspaceCard key={ws.id} ws={ws} onOpen={() => navigate(`/business/workspace/${ws.id}`)} />
             ))}
           </div>
         )}
