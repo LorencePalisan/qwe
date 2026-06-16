@@ -1,6 +1,6 @@
 ﻿import type { ElementType } from "react";
 import { cn } from "@/lib/utils";
-import Sidebar from "@/components/Sidebar";
+import SideBar from "@/components/app/SideBar";
 import {
   ChevronRight,
   Plus,
@@ -210,11 +210,11 @@ const DISCOVER = [
 
 export default function Dashboard() {
   return (
-    <div className="dark flex min-h-screen bg-background font-sans">
-      <Sidebar />
+    <div className="dark min-h-screen bg-background font-sans">
+      <SideBar />
 
-      {/* ── Main content shifted right of sidebar ─────────────────── */}
-      <div className="flex-1 pl-20">
+      {/* ── Main content — offset for fixed sidebar / mobile header ── */}
+      <div className="pt-16 xl:pt-0 xl:pl-18">
 
       {/* ── Cover / Hero ──────────────────────────────────────────── */}
       <section className="relative h-165 w-full overflow-hidden">
@@ -522,7 +522,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      </div>{/* end flex-1 pl-20 wrapper */}
+      </div>{/* end content wrapper */}
     </div>
   );
 }
