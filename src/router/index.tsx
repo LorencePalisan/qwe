@@ -213,4 +213,4 @@ export const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
     ],
   },
-]);
+], { basename: import.meta.env.BASE_URL });
